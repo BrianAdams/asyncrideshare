@@ -1,0 +1,19 @@
+{
+   "ratings" : [
+       {
+          "driver_id":123,
+          "trip_id":"abc",
+          "trip_distance_km":0.3,
+          "trip_time_minutes":5,
+          "trip_thumbs_up":true
+       },
+       {
+         "driver_id":1234,
+         "trip_id":"abcd",
+         "trip_distance_km":22.3,
+         "trip_time_minutes":50,
+         "trip_thumbs_up":false
+      }
+   ]
+}
+ 

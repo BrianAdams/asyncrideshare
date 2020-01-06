@@ -1,0 +1,26 @@
+{
+    "stats" : {
+        "most_trip_time":{
+            "1":{
+                "driver_id":1234,
+                "trip_time_minutes":50
+            },
+            "2":{
+                "driver_id":123,
+                "trip_time_minutes":5
+            }
+        },
+        "highest_thumbs_up_ratio":{
+            "1":{
+                "driver_id":123,
+                "thumbs_up_ratio ": 1.0
+            },
+            "2":{
+                "driver_id":1234,
+                "trip_time_minutes": 0.0
+            }
+        }        
+    }
+}
+
+  
