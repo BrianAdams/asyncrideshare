@@ -13,27 +13,27 @@ from process.repository import Repository
 from process.leaderboard import LeaderBoard
 
 
-# init 
-repository=None 
-leaderboard=None 
-controller=None 
+# init
+repository = None
+leaderboard = None
+controller = None
 
 
 @click.group()
 @click.option("--raw_data_path")
 def cli(raw_data_path=None):
     """
-    This applciation will return the lat/lon from any one of several
-    web services.
+    This applciation will process ride share/taxi raiting and make a leaderboard that is avaiable via web services.
     """
-    
+
     global repository
     global leaderboard
     global controller
 
-    repository=Repository(file=raw_data_path)
-    leaderboard=LeaderBoard(repository)
-    controller=Controller(leaderboard)
+    repository = Repository(file=raw_data_path)
+    leaderboard = LeaderBoard(repository)
+    controller = Controller(leaderboard)
+
 
 @click.command(help="Start the API server")
 @click.option("--service_port")
@@ -46,11 +46,13 @@ def server(service_port):
 
 async def lb_async(controller):
     result = await controller.get_leaderboard()
-    print(json.dumps(result["stats"],indent=4,sort_keys=True))
+    print(json.dumps(result["stats"], indent=4, sort_keys=True))
+
 
 @click.command(help="Dump the leaderboard")
 def lb():
     asyncio.run(lb_async(controller))
+
 
 def main():
     # pylint: disable=no-value-for-parameter
