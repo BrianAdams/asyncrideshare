@@ -27,5 +27,7 @@ COPY . /opt/process
 RUN pip install /opt/process
 USER process
 WORKDIR /opt
-CMD uvicorn --workers 2 process.fastapi:app --host 0.0.0.0
+
+#More work would be needed to handle the inmemory solution we are running to add workers
+CMD uvicorn --workers 1 process.fastapi:app --host 0.0.0.0
 

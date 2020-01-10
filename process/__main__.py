@@ -17,14 +17,21 @@ from process.leaderboard import LeaderBoard
 repository = None
 leaderboard = None
 controller = None
+file_watcher = None
 
 
 @click.group()
 @click.option("--raw_data_path")
-def cli(raw_data_path=None):
+@click.option("--incomming_data_path")
+def cli(raw_data_path=None, incomming_data_path="data/incomming"):
     """
     This applciation will process ride share/taxi raiting and make a leaderboard that is avaiable via web services.
     """
+    if raw_data_path:
+        os.environ["raw_data_path"] = raw_data_path
+
+    if incomming_data_path:
+        os.environ["incomming_data_path"] = incomming_data_path
 
     global repository
     global leaderboard

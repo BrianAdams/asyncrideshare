@@ -14,16 +14,30 @@ a thumbs up if the user liked it
 ### Contributing
 This is not an ongoing project. Feel free to clone and use this if you find it useful. I'm not planning on accepting an contributions or changes.
 
+### Using the web API
+Browse API documentation
+Swagger is used to document the API:
+```
+http://localhost:8080/docs
+```
+
+### Adding data
+The system will monitor whatever path is pointed to by the `incomming_data_path` parameter.  It will attempt to parse any .json file it finds.
+
+You can test easily by pointing to the `tests/incomming` folder and copying the  `tests/taxi_raitings.json` file in.
+
+There is also a parameter `raw_data_path` that can point directly to a static raitings.json file which it will load on startup.
+
 ### Docker Setup
 The fastest way to get started is to just run the environment in a docker container.
 ```
 docker build -t process .
 
-# You can run the web server as
-docker run -it process
+# You can run the web server (on windows replace $(pwd) with the path of the directory with the process project files)
+docker run -it -v $(pwd)/tests:/data -p 8080:8000 process /usr/local/bin/process --raw_data_path=/data/taxi_raitings.json --incomming_data_path=/data/incomming server
 
-# Or to test from the commandline (on windows replace $(pwd) with the path of the directory with the process project files)
-docker run -it -v $(pwd)/tests:/data  process /usr/local/bin/process --raw_data_path /data/taxi_raitings.json lb
+# Point your browser to
+http://localhost:8080/docs
 ```
 
 ### Non-Docker Setup
@@ -37,21 +51,48 @@ Setup the environment: This is using venv
 You can then try the program with
 ```
 > process --raw_data_path tests/taxi_raitings.json lb
+2020-01-10 10:01:21.618 | INFO     | process.repository:__init__:16 - Parsing file: tests/taxi_raitings.json
+2020-01-10 10:01:21.620 | INFO     | process.repository:__init__:20 - Initalizing storage with 1 records.
 {
-    "highest_thumbs_up_ratio": {},
+    "highest_thumbs_up_ratio": {
+        "1": {
+            "driver_id": 123,
+            "thumbs_up_ratio": 1.0,
+            "thumbs_up_total": 1,
+            "trip_time_minutes": 5,
+            "trips": 1
+        },
+        "2": {
+            "driver_id": 1234,
+            "thumbs_up_ratio": 0.0,
+            "thumbs_up_total": 0,
+            "trip_time_minutes": 50,
+            "trips": 1
+        }
+    },
     "most_trip_time": {
         "1": {
             "driver_id": 1234,
-            "trip_time_minutes": 50
+            "thumbs_up_ratio": 0.0,
+            "thumbs_up_total": 0,
+            "trip_time_minutes": 50,
+            "trips": 1
         },
         "2": {
             "driver_id": 123,
-            "trip_time_minutes": 5
+            "thumbs_up_ratio": 1.0,
+            "thumbs_up_total": 1,
+            "trip_time_minutes": 5,
+            "trips": 1
         }
     }
 }
 
 ```
+
+Or to run the webserver:
+>  `SERVICE_PORT=8001 process --raw_data_path=tests/taxi_raitings.json --incomming_data_path=tests/incomming server`
+Then point your your browser to http://localhost:8001/docs
 
 ### Pre-commit hooks
 Run pre-commit install to install pre-commit into your git hooks. pre-commit will now run on every commit. Every time you clone this project running pre-commit install should always be the first thing you do.
