@@ -9,11 +9,10 @@ import random
 from loguru import logger
 from process.leaderboard import LeaderBoard
 
-class Controller():
 
-    def __init__(self, leaderboard:LeaderBoard):
-        self.leaderboard = leaderboard 
+class Controller:
+    def __init__(self, leaderboard: LeaderBoard):
+        self.leaderboard = leaderboard
 
     async def get_leaderboard(self):
         return await self.leaderboard.calculate_leaders()
-
